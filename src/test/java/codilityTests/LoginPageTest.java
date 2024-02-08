@@ -42,7 +42,7 @@ public class LoginPageTest extends BaseTest {
         WebElement passwordField = driver.findElement(By.id("password-input"));
         WebElement loginBtn = driver.findElement(By.id("login-button"));
 
-        emailField.sendKeys("login@codility");
+        emailField.sendKeys("login@codility.com");
         passwordField.sendKeys("password");
         loginBtn.click();
 
@@ -54,16 +54,16 @@ public class LoginPageTest extends BaseTest {
 
 
     @Test
-    public void verifyIvalidCredentials() {
+    public void verifyInvalidCredentials() {
         WebElement emailField = driver.findElement(By.id("email-input"));
         WebElement passwordField = driver.findElement(By.id("password-input"));
         WebElement loginBtn = driver.findElement(By.id("login-button"));
 
-        emailField.sendKeys("unknown@codility");
+        emailField.sendKeys("unknown@codility.com");
         passwordField.sendKeys("password");
         loginBtn.click();
 
-        WebElement invalidCredentialMsg = driver.findElement(By.xpath("//div[@Class='message success']"));
+        WebElement invalidCredentialMsg = driver.findElement(By.xpath("//div[@class='message error' and contains(text(), 'You shall not pass! Arr!')]"));
 
         Assert.assertTrue(invalidCredentialMsg.isDisplayed(), "You shall not pass! Arr! Message is displayed");
         System.out.println(invalidCredentialMsg.isDisplayed());
@@ -75,11 +75,11 @@ public class LoginPageTest extends BaseTest {
         WebElement passwordField = driver.findElement(By.id("password-input"));
         WebElement loginBtn = driver.findElement(By.id("login-button"));
 
-        emailField.sendKeys("dasa@dsdsd.com");
+        emailField.sendKeys("dasa");
         passwordField.sendKeys("password");
         loginBtn.click();
 
-        WebElement invalidEmailMsg = driver.findElement(By.xpath("/div[@class='validation error' and contains(text(), 'Enter a valid email')]"));
+        WebElement invalidEmailMsg = driver.findElement(By.xpath("//div[@class='validation error' and contains(text(), 'Enter a valid email')]"));
 
         Assert.assertTrue(invalidEmailMsg.isDisplayed(), "Enter a valid email Message is displayed");
         System.out.println(invalidEmailMsg.isDisplayed());
@@ -87,15 +87,12 @@ public class LoginPageTest extends BaseTest {
 
     @Test
     public void verifyEmptyCredential() {
-        WebElement emailField = driver.findElement(By.id("email-input"));
-        WebElement passwordField = driver.findElement(By.id("password-input"));
+
         WebElement loginBtn = driver.findElement(By.id("login-button"));
 
-        emailField.sendKeys(" ");
-        passwordField.sendKeys(" ");
         loginBtn.click();
 
-        WebElement emailReqMsg = driver.findElement(By.xpath("/div[@class='validation error' and contains(text(), 'Email is required')]"));
+        WebElement emailReqMsg = driver.findElement(By.xpath("//div[@class='validation error' and contains(text(), 'Email is required')]"));
         WebElement pswReqMsg = driver.findElement(By.xpath("//div[@class='validation error' and contains(text(), 'Password is required')]"));
 
         Assert.assertTrue(emailReqMsg.isDisplayed(), "Email is required Message is displayed");
